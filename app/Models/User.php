@@ -4,10 +4,11 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -47,5 +48,53 @@ class User extends Authenticatable implements MustVerifyEmail
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function complaints(){
+        return $this->hasMany(Complaint::class);
+    }
+
+    public function comments(){
+        return $this->hasMany(Comment::class);
+    }
+
+    public function responses(){
+        return $this->hasMany(Response::class);
+    }
+
+    public function archives(){
+        return $this->hasMany(Archive::class);
+    }
+
+    public function aspirations(){
+        return $this->hasMany(Aspiration::class);
+    }
+
+    public function apsirationVotes(){
+        return $this->hasMany(AspirationVote::class);
+    }
+
+    public function responsivenessScore(){
+        return $this->hasOne(ResponsivenessScore::class);
+    }
+
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isPemerintah()
+    {
+        return $this->role === 'pemerintah';
+    }
+
+    public function isUser()
+    {
+        return $this->role === 'user';
     }
 }

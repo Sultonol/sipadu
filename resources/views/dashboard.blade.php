@@ -3,461 +3,765 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Pengaduan Masyarakat</title>
+    <title>Dashboard - Sistem Pengaduan Masyarakat</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body class="bg-gray-50 font-sans">
-    <!-- Main Container -->
-    <div class="flex h-screen overflow-hidden">
-        <!-- Sidebar -->
-        <aside class="hidden md:flex md:flex-col w-64 bg-gradient-to-b from-blue-800 to-blue-600 text-white">
-            <div class="flex items-center justify-center h-16 border-b border-blue-700">
-                <div class="text-xl font-bold tracking-wider">SIPADU</div>
-            </div>
-            <nav class="flex-grow p-4 space-y-2">
-                <a href="#" class="flex items-center px-4 py-3 rounded-lg bg-blue-700 text-white">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
-                    </svg>
-                    Dashboard
-                </a>
-                <a href="#" class="flex items-center px-4 py-3 rounded-lg hover:bg-blue-700 text-blue-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
-                    </svg>
-                    Pengaduan
-                </a>
-                <a href="#" class="flex items-center px-4 py-3 rounded-lg hover:bg-blue-700 text-blue-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
-                    </svg>
-                    Masyarakat
-                </a>
-                <a href="#" class="flex items-center px-4 py-3 rounded-lg hover:bg-blue-700 text-blue-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
-                    </svg>
-                    Pengaturan
-                </a>
-            </nav>
-            <div class="p-4 border-t border-blue-700">
-                <div class="flex items-center">
-                    <div class="h-10 w-10 rounded-full bg-blue-400 flex items-center justify-center">
-                        <span class="text-white font-semibold">JD</span>
-                    </div>
-                    <div class="ml-3">
-                        <p class="text-sm font-medium text-white">{{ $user->name }}</p>
-                        <p class="text-xs text-blue-200">{{ $user->role }}</p>
-                    </div>
-                </div>
-                <button id="logoutBtn" class="mt-3 w-full bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg text-sm font-medium transition duration-200 flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd" />
-                    </svg>
-                    Keluar
-                </button>
-            </div>
-        </aside>
-
-        <!-- Main Content -->
-        <div class="flex-1 flex flex-col overflow-hidden">
-            <!-- Mobile Header -->
-            <header class="md:hidden bg-blue-600 text-white p-4 flex justify-between items-center">
-                <div class="text-xl font-bold">SIPADU</div>
-                <button class="p-1 rounded-md text-blue-200 hover:text-white focus:outline-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                </button>
-            </header>
-
-            <!-- Main Content Area -->
-            <main class="flex-1 overflow-y-auto p-4 md:p-6">
-                <!-- Header -->
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
-                    <div>
-                        <h1 class="text-2xl md:text-3xl font-bold text-gray-800">Dashboard Pengaduan</h1>
-                        <p class="text-gray-600">Selamat datang kembali, {{ $user->name }}</p>
-                    </div>
-                    <div class="mt-4 md:mt-0 flex space-x-2">
-                        <div class="relative">
-                            <input type="text" placeholder="Cari pengaduan..." class="pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full md:w-64">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 absolute left-3 top-2.5" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
-                            </svg>
-                        </div>
-                        <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center transition duration-200">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
-                            </svg>
-                            <span class="hidden md:inline"><a href="{{ url('/complaints-add') }}">Pengaduan Baru</a></span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Stats Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                    <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-                        <div class="flex justify-between">
-                            <div>
-                                <p class="text-sm font-medium text-gray-500">Total Pengaduan</p>
-                                <h3 class="text-2xl font-bold text-gray-800 mt-1">1,257</h3>
-                                <p class="text-xs text-green-500 font-medium mt-2">
-                                    <span class="inline-flex items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clip-rule="evenodd" />
-                                        </svg>
-                                        12.5%
-                                    </span>
-                                    dari bulan lalu
-                                </p>
-                            </div>
-                            <div class="h-12 w-12 rounded-lg bg-blue-100 flex items-center justify-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-                        <div class="flex justify-between">
-                            <div>
-                                <p class="text-sm font-medium text-gray-500">Proses</p>
-                                <h3 class="text-2xl font-bold text-gray-800 mt-1">324</h3>
-                                <p class="text-xs text-blue-500 font-medium mt-2">
-                                    <span class="inline-flex items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                                        </svg>
-                                        8.2%
-                                    </span>
-                                    dari kemarin
-                                </p>
-                            </div>
-                            <div class="h-12 w-12 rounded-lg bg-yellow-100 flex items-center justify-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-                        <div class="flex justify-between">
-                            <div>
-                                <p class="text-sm font-medium text-gray-500">Selesai</p>
-                                <h3 class="text-2xl font-bold text-gray-800 mt-1">876</h3>
-                                <p class="text-xs text-green-500 font-medium mt-2">
-                                    <span class="inline-flex items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clip-rule="evenodd" />
-                                        </svg>
-                                        24.1%
-                                    </span>
-                                    dari bulan lalu
-                                </p>
-                            </div>
-                            <div class="h-12 w-12 rounded-lg bg-green-100 flex items-center justify-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-                        <div class="flex justify-between">
-                            <div>
-                                <p class="text-sm font-medium text-gray-500">Waktu Tanggap</p>
-                                <h3 class="text-2xl font-bold text-gray-800 mt-1">2.3 <span class="text-base font-normal">hari</span></h3>
-                                <p class="text-xs text-green-500 font-medium mt-2">
-                                    <span class="inline-flex items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clip-rule="evenodd" />
-                                        </svg>
-                                        36.7%
-                                    </span>
-                                    lebih cepat
-                                </p>
-                            </div>
-                            <div class="h-12 w-12 rounded-lg bg-purple-100 flex items-center justify-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Charts and Recent Complaints -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-                    <!-- Chart -->
-                    <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 lg:col-span-2">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-lg font-semibold text-gray-800">Statistik Pengaduan Bulan Ini</h3>
-                            <div class="flex space-x-2">
-                                <button class="px-3 py-1 text-xs bg-blue-50 text-blue-600 rounded-md">Harian</button>
-                                <button class="px-3 py-1 text-xs text-gray-500 hover:bg-gray-50 rounded-md">Mingguan</button>
-                                <button class="px-3 py-1 text-xs text-gray-500 hover:bg-gray-50 rounded-md">Bulanan</button>
-                            </div>
-                        </div>
-                        <div class="h-80">
-                            <canvas id="complaintChart"></canvas>
-                        </div>
-                    </div>
-
-                    <!-- Recent Complaints -->
-                    <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-lg font-semibold text-gray-800">Pengaduan Terkini</h3>
-                            <a href="#" class="text-sm text-blue-600 hover:text-blue-800">Lihat Semua</a>
-                        </div>
-                        <div class="space-y-4">
-                            <div class="flex items-start">
-                                <div class="flex-shrink-0 h-10 w-10 rounded-full bg-red-100 flex items-center justify-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
-                                    </svg>
-                                </div>
-                                <div class="ml-3">
-                                    <p class="text-sm font-medium text-gray-900">Jalan Rusak</p>
-                                    <p class="text-xs text-gray-500">Jl. Merdeka No. 12, Kec. Bogor Tengah</p>
-                                    <div class="mt-1 flex items-center text-xs text-gray-500">
-                                        <span class="inline-flex items-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
-                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
-                                            </svg>
-                                            2 jam lalu
-                                        </span>
-                                        <span class="ml-3 bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full text-xs">Proses</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="flex items-start">
-                                <div class="flex-shrink-0 h-10 w-10 rounded-full bg-green-100 flex items-center justify-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
-                                    </svg>
-                                </div>
-                                <div class="ml-3">
-                                    <p class="text-sm font-medium text-gray-900">Penerangan Jalan</p>
-                                    <p class="text-xs text-gray-500">Jl. Pahlawan No. 45, Kec. Bogor Utara</p>
-                                    <div class="mt-1 flex items-center text-xs text-gray-500">
-                                        <span class="inline-flex items-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1 text-green-500" viewBox="0 0 20 20" fill="currentColor">
-                                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
-                                            </svg>
-                                            Kemarin
-                                        </span>
-                                        <span class="ml-3 bg-green-100 text-green-800 px-2 py-0.5 rounded-full text-xs">Selesai</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="flex items-start">
-                                <div class="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
-                                        <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
-                                    </svg>
-                                </div>
-                                <div class="ml-3">
-                                    <p class="text-sm font-medium text-gray-900">Banjir</p>
-                                    <p class="text-xs text-gray-500">Jl. Raya Bogor Km. 5, Kec. Bogor Selatan</p>
-                                    <div class="mt-1 flex items-center text-xs text-gray-500">
-                                        <span class="inline-flex items-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
-                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
-                                            </svg>
-                                            1 hari lalu
-                                        </span>
-                                        <span class="ml-3 bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full text-xs">Ditangani</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Recent Activity and Quick Actions -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <!-- Quick Actions -->
-                    <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Aksi Cepat</h3>
-                        <div class="grid grid-cols-2 gap-3">
-                            <button class="p-4 rounded-lg bg-blue-50 hover:bg-blue-100 flex flex-col items-center transition duration-200">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                </svg>
-                                <span class="text-xs font-medium text-gray-700">Buat Laporan</span>
-                            </button>
-                            <button class="p-4 rounded-lg bg-green-50 hover:bg-green-100 flex flex-col items-center transition duration-200">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                </svg>
-                                <span class="text-xs font-medium text-gray-700">Ekspor Data</span>
-                            </button>
-                            <button class="p-4 rounded-lg bg-purple-50 hover:bg-purple-100 flex flex-col items-center transition duration-200">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-600 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                </svg>
-                                <span class="text-xs font-medium text-gray-700">Pantau Laporan</span>
-                            </button>
-                            <button class="p-4 rounded-lg bg-yellow-50 hover:bg-yellow-100 flex flex-col items-center transition duration-200">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-600 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                </svg>
-                                <span class="text-xs font-medium text-gray-700">Pengaturan</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Recent Activity -->
-                    <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 lg:col-span-2">
-                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Aktivitas Terkini</h3>
-                        <div class="space-y-4">
-                            <div class="flex">
-                                <div class="flex-shrink-0 mr-3">
-                                    <div class="h-9 w-9 rounded-full bg-blue-100 flex items-center justify-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600" viewBox="0 0 20 20" fill="currentColor">
-                                            <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6z" />
-                                        </svg>
-                                    </div>
-                                </div>
-                                <div class="flex-1">
-                                    <div class="flex items-center justify-between">
-                                        <p class="text-sm font-medium text-gray-900">John Doe</p>
-                                        <p class="text-xs text-gray-500">2 menit lalu</p>
-                                    </div>
-                                    <p class="text-sm text-gray-600">Melaporkan pengaduan baru tentang "Jalan Rusak" di Jl. Merdeka No. 12</p>
-                                </div>
-                            </div>
-
-                            <div class="flex">
-                                <div class="flex-shrink-0 mr-3">
-                                    <div class="h-9 w-9 rounded-full bg-green-100 flex items-center justify-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-600" viewBox="0 0 20 20" fill="currentColor">
-                                            <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v1h8v-1zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-1a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v1h-3zM4.75 12.094A5.973 5.973 0 004 15v1H1v-1a3 3 0 013.75-2.906z" />
-                                        </svg>
-                                    </div>
-                                </div>
-                                <div class="flex-1">
-                                    <div class="flex items-center justify-between">
-                                        <p class="text-sm font-medium text-gray-900">Sarah Smith</p>
-                                        <p class="text-xs text-gray-500">1 jam lalu</p>
-                                    </div>
-                                    <p class="text-sm text-gray-600">Menanggapi pengaduan "Penerangan Jalan" dengan solusi yang diberikan</p>
-                                </div>
-                            </div>
-
-                            <div class="flex">
-                                <div class="flex-shrink-0 mr-3">
-                                    <div class="h-9 w-9 rounded-full bg-purple-100 flex items-center justify-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-600" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                        </svg>
-                                    </div>
-                                </div>
-                                <div class="flex-1">
-                                    <div class="flex items-center justify-between">
-                                        <p class="text-sm font-medium text-gray-900">System</p>
-                                        <p class="text-xs text-gray-500">3 jam lalu</p>
-                                    </div>
-                                    <p class="text-sm text-gray-600">Pengaduan "Jalan Berlubang" telah ditingkatkan ke status prioritas tinggi</p>
-                                </div>
-                            </div>
-
-                            <div class="flex">
-                                <div class="flex-shrink-0 mr-3">
-                                    <div class="h-9 w-9 rounded-full bg-yellow-100 flex items-center justify-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-600" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd" d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z" clip-rule="evenodd" />
-                                        </svg>
-                                    </div>
-                                </div>
-                                <div class="flex-1">
-                                    <div class="flex items-center justify-between">
-                                        <p class="text-sm font-medium text-gray-900">Michael Brown</p>
-                                        <p class="text-xs text-gray-500">5 jam lalu</p>
-                                    </div>
-                                    <p class="text-sm text-gray-600">Memberikan komentar pada pengaduan "Banjir" dengan saran untuk perbaikan</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </main>
-        </div>
-    </div>
-
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script>
-        // Initialize charts
-        document.addEventListener('DOMContentLoaded', function() {
-            // Complaint Chart
-            const ctx = document.getElementById('complaintChart').getContext('2d');
-            const complaintChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['1 Jun', '5 Jun', '10 Jun', '15 Jun', '20 Jun', '25 Jun', '30 Jun'],
-                    datasets: [{
-                        label: 'Pengaduan Masuk',
-                        data: [12, 19, 30, 25, 22, 18, 35],
-                        backgroundColor: 'rgba(59, 130, 246, 0.7)',
-                        borderColor: 'rgba(59, 130, 246, 1)',
-                        borderWidth: 1
-                    }, {
-                        label: 'Pengaduan Selesai',
-                        data: [8, 15, 22, 18, 20, 16, 28],
-                        backgroundColor: 'rgba(16, 185, 129, 0.7)',
-                        borderColor: 'rgba(16, 185, 129, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                drawBorder: false,
-                                color: 'rgba(0, 0, 0, 0.05)'
-                            }
-                        },
-                        x: {
-                            grid: {
-                                display: false
-                            }
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
                         }
                     }
                 }
-            });
-
-            // Mobile menu toggle
-            const mobileMenuButton = document.querySelector('.md\\:hidden button');
-            if (mobileMenuButton) {
-                mobileMenuButton.addEventListener('click', function() {
-                    const sidebar = document.querySelector('aside');
-                    sidebar.classList.toggle('hidden');
-                });
             }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 min-h-screen" x-data="{ showAllModal: false }">
+    <!-- Navigation Header -->
+    <nav class="bg-white shadow-lg border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo & Brand -->
+                <div class="flex items-center space-x-4">
+                    <div class="flex-shrink-0">
+                        <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-comments text-white text-sm"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-bold text-gray-900">SiPengMas</h1>
+                        <p class="text-xs text-gray-500">Sistem Pengaduan Masyarakat</p>
+                    </div>
+                </div>
 
-            // Logout functionality
-            const logoutBtn = document.getElementById('logoutBtn');
-            if (logoutBtn) {
-                logoutBtn.addEventListener('click', function() {
-                    // In a real app, this would redirect to logout endpoint
-                    alert('Anda akan keluar dari sistem');
-                    window.location.href = '/login'; // Redirect to login page
-                });
-            }
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="{{ route('dashboard') }}" class="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors">
+                        <i class="fas fa-home mr-1 text-xs"></i>Dashboard
+                    </a>
+                    
+                    @if (auth()->user()->role === 'user')
+                        <!-- Menu khusus untuk User/Masyarakat - DIUBAH -->
+                        <a href="{{ route('user.all.complaints') }}" class="text-gray-600 hover:text-blue-600 text-sm font-medium transition-colors">
+                            <i class="fas fa-list mr-1 text-xs"></i>Semua Pengaduan
+                        </a>
+                        <a href="{{ route('user.complaints') }}" class="text-gray-600 hover:text-blue-600 text-sm font-medium transition-colors">
+                            <i class="fas fa-file-alt mr-1 text-xs"></i>Pengaduan Saya
+                        </a>
+                        <a href="{{ route('complaint') }}" class="text-gray-600 hover:text-blue-600 text-sm font-medium transition-colors">
+                            <i class="fas fa-plus mr-1 text-xs"></i>Buat Pengaduan
+                        </a>
+                    @elseif (auth()->user()->role === 'admin')
+                        <!-- Menu khusus untuk Administrator -->
+                        <a href="{{ route('admin.complaints.list') }}" class="text-gray-600 hover:text-blue-600 text-sm font-medium transition-colors">
+                            <i class="fas fa-file-alt mr-1 text-xs"></i>Kelola Pengaduan
+                        </a>
+                        <a href="{{ route('admin.users.list') }}" class="text-gray-600 hover:text-blue-600 text-sm font-medium transition-colors">
+                            <i class="fas fa-users mr-1 text-xs"></i>Kelola User
+                        </a>
+                        <a href="{{ route('admin.reports') }}" class="text-gray-600 hover:text-blue-600 text-sm font-medium transition-colors">
+                            <i class="fas fa-chart-bar mr-1 text-xs"></i>Laporan
+                        </a>
+                        <a href="{{ route('admin.settings') }}" class="text-gray-600 hover:text-blue-600 text-sm font-medium transition-colors">
+                            <i class="fas fa-cog mr-1 text-xs"></i>Pengaturan
+                        </a>
+                    @elseif (auth()->user()->role === 'government')
+                        <!-- Menu khusus untuk Pemerintah -->
+                        <a href="{{ route('admin.complaints.list') }}" class="text-gray-600 hover:text-blue-600 text-sm font-medium transition-colors">
+                            <i class="fas fa-file-alt mr-1 text-xs"></i>Kelola Pengaduan
+                        </a>
+                        <a href="{{ route('admin.reports') }}" class="text-gray-600 hover:text-blue-600 text-sm font-medium transition-colors">
+                            <i class="fas fa-chart-bar mr-1 text-xs"></i>Laporan
+                        </a>
+                        <a href="{{ route('panduan') }}" class="text-gray-600 hover:text-blue-600 text-sm font-medium transition-colors">
+                            <i class="fas fa-book mr-1 text-xs"></i>Panduan
+                        </a>
+                    @endif
+                </div>
+
+                <!-- User Menu -->
+                <div class="flex items-center space-x-3" x-data="{ open: false }">
+                    <div class="hidden md:flex items-center space-x-2">
+                        <div class="text-right">
+                            <p class="text-xs font-medium text-gray-900">{{ Auth::user()->name ?? 'John Doe' }}</p>
+                            <p class="text-xs text-gray-500">
+                                @if(auth()->user()->role === 'admin')
+                                    <span class="bg-red-100 text-red-800 px-1.5 py-0.5 rounded-full text-xs font-medium">Admin</span>
+                                @elseif(auth()->user()->role === 'government')
+                                    <span class="bg-green-100 text-green-800 px-1.5 py-0.5 rounded-full text-xs font-medium">Pemerintah</span>
+                                @else
+                                    <span class="bg-blue-100 text-blue-800 px-1.5 py-0.5 rounded-full text-xs font-medium">Masyarakat</span>
+                                @endif
+                            </p>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <button @click="open = !open" class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white hover:shadow-lg transition-shadow">
+                            <i class="fas fa-user text-xs"></i>
+                        </button>
+                        <div x-show="open" @click.away="open = false" x-transition class="absolute right-0 mt-2 w-44 bg-white rounded-lg shadow-lg py-1 z-50">
+                            <a href="{{ route('profile.edit') }}" class="block px-3 py-2 text-xs text-gray-700 hover:bg-gray-100">
+                                <i class="fas fa-user-circle mr-2 text-xs"></i>Profil Saya
+                            </a>
+                            
+                            @if(auth()->user()->role === 'admin')
+                                <a href="{{ route('admin.settings') }}" class="block px-3 py-2 text-xs text-gray-700 hover:bg-gray-100">
+                                    <i class="fas fa-cog mr-2 text-xs"></i>Pengaturan
+                                </a>
+                                <a href="{{ route('admin.users.list') }}" class="block px-3 py-2 text-xs text-gray-700 hover:bg-gray-100">
+                                    <i class="fas fa-users mr-2 text-xs"></i>Kelola User
+                                </a>
+                            @elseif(auth()->user()->role === 'government')
+                                <a href="{{ route('admin.reports') }}" class="block px-3 py-2 text-xs text-gray-700 hover:bg-gray-100">
+                                    <i class="fas fa-chart-line mr-2 text-xs"></i>Laporan
+                                </a>
+                            @elseif(auth()->user()->role === 'user')
+                                <a href="{{ route('user.all.complaints') }}" class="block px-3 py-2 text-xs text-gray-700 hover:bg-gray-100">
+                                    <i class="fas fa-list mr-2 text-xs"></i>Semua Pengaduan
+                                </a>
+                                <a href="{{ route('user.complaints') }}" class="block px-3 py-2 text-xs text-gray-700 hover:bg-gray-100">
+                                    <i class="fas fa-file-alt mr-2 text-xs"></i>Pengaduan Saya
+                                </a>
+                                <a href="{{ route('complaint') }}" class="block px-3 py-2 text-xs text-gray-700 hover:bg-gray-100">
+                                    <i class="fas fa-plus mr-2 text-xs"></i>Buat Pengaduan
+                                </a>
+                                <a href="{{ route('panduan') }}" class="block px-3 py-2 text-xs text-gray-700 hover:bg-gray-100">
+                                    <i class="fas fa-book mr-2 text-xs"></i>Panduan
+                                </a>
+                            @endif
+                            
+                            <div class="border-t border-gray-100 my-1"></div>
+                            <a href="{{ route('logout') }}" class="block px-3 py-2 text-xs text-gray-700 hover:bg-gray-100">
+                                <i class="fas fa-sign-out-alt mr-2 text-xs"></i>Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Welcome Section -->
+        <div class="mb-8">
+            <div class="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 rounded-2xl p-8 text-white relative overflow-hidden">
+                <div class="absolute inset-0 bg-black opacity-10"></div>
+                <div class="relative z-10">
+                    <h2 class="text-3xl font-bold mb-2">
+                        Selamat Datang, {{ Auth::user()->name ?? 'Pengguna' }}! 👋
+                    </h2>
+                    
+                    @if (auth()->user()->role === 'user')
+                        <p class="text-blue-100 text-lg mb-6">
+                            Mari bersama-sama membangun masyarakat yang lebih baik melalui sistem pengaduan yang transparan dan efektif.
+                        </p>
+                        <div class="flex flex-wrap gap-4">
+                            <!-- DIUBAH: Tombol utama sekarang untuk melihat semua pengaduan -->
+                            <button onclick="window.location.href='{{ route('user.all.complaints') }}'"
+                                     class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors flex items-center">
+                                <i class="fas fa-list mr-2"></i>Lihat Semua Pengaduan
+                            </button>
+                            <button onclick="window.location.href='{{ route('complaint') }}'"
+                                     class="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors flex items-center">
+                                <i class="fas fa-plus mr-2"></i>Buat Pengaduan Baru
+                            </button>
+                            <button onclick="window.location.href='{{ route('user.complaints') }}'"
+                                     class="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors flex items-center">
+                                <i class="fas fa-file-alt mr-2"></i>Pengaduan Saya
+                            </button>
+                        </div>
+                    @else
+                        <p class="text-blue-100 text-lg mb-6">
+                            @if(auth()->user()->role === 'admin')
+                                Kelola sistem pengaduan masyarakat dengan efisien dan transparan sebagai Administrator.
+                            @else
+                                Tanggapi dan kelola pengaduan masyarakat untuk pelayanan yang lebih baik sebagai Pemerintah.
+                            @endif
+                        </p>
+                        <div class="flex flex-wrap gap-4">
+                            <button onclick="window.location.href='{{ route('admin.complaints.list') }}'"
+                                     class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors flex items-center">
+                                <i class="fas fa-tasks mr-2"></i>Kelola Pengaduan
+                            </button>
+                            @if(auth()->user()->role === 'admin')
+                                <button onclick="window.location.href='{{ route('admin.users.list') }}'"
+                                         class="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors flex items-center">
+                                    <i class="fas fa-users mr-2"></i>Kelola User
+                                </button>
+                            @endif
+                            <button onclick="window.location.href='{{ route('admin.reports') }}'"
+                                     class="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors flex items-center">
+                                <i class="fas fa-chart-line mr-2"></i>Lihat Laporan
+                            </button>
+                        </div>
+                    @endif
+                </div>
+                <!-- Decorative Elements -->
+                <div class="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -mr-32 -mt-32"></div>
+                <div class="absolute bottom-0 left-0 w-48 h-48 bg-white opacity-5 rounded-full -ml-24 -mb-24"></div>
+            </div>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mb-8">
+            @foreach ($statsCards as $card)
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">{{ $card['title'] }}</p>
+                            <p class="text-3xl font-bold text-gray-900">{{ $card['value'] }}</p>
+                            <p class="text-sm text-{{ $card['color'] }}-600 flex items-center mt-1">
+                                <i class="fas fa-arrow-up mr-1"></i>{{ $card['subtitle'] }}
+                            </p>
+                        </div>
+                        <div class="w-12 h-12 bg-{{ $card['color'] }}-100 rounded-lg flex items-center justify-center">
+                            <i class="{{ $card['icon'] }} text-{{ $card['color'] }}-600 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Recent Complaints -->
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+                    <div class="p-6 border-b border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-semibold text-gray-900">
+                                @if(auth()->user()->role === 'user')
+                                    Pengaduan Saya
+                                @else
+                                    Pengaduan Terbaru
+                                @endif
+                            </h3>
+                            @if(auth()->user()->role === 'user')
+                                <a href="{{ route('user.complaints') }}" class="text-blue-600 hover:text-blue-700 text-sm font-medium hover:underline">
+                                    Lihat Semua
+                                </a>
+                            @else
+                                <a href="#" @click.prevent="showAllModal = true" class="text-blue-600 hover:text-blue-700 text-sm font-medium hover:underline cursor-pointer">
+                                    Lihat Semua
+                                </a>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        @if ($complaints->count() > 0)
+                            <div class="space-y-4">
+                                @foreach ($complaints->take(5) as $complaint)
+                                    @php
+                                        $status = $statusConfig[$complaint->status] ?? [
+                                            'label' => ucfirst(str_replace('_', ' ', $complaint->status)),
+                                            'icon' => 'fas fa-file-alt',
+                                            'bg' => 'bg-gray-100',
+                                            'text' => 'text-gray-600',
+                                            'badge' => 'bg-gray-100 text-gray-800',
+                                        ];
+                                    @endphp
+                                    <div class="flex items-start space-x-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                                        <div class="w-10 h-10 {{ $status['bg'] }} rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <i class="{{ $status['icon'] }} {{ $status['text'] }}"></i>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <div class="flex items-start justify-between">
+                                                <div class="flex-1">
+                                                    <h4 class="text-sm font-medium text-gray-900 truncate">
+                                                        <a href="{{ route('complaint.detail', $complaint->id) }}" class="hover:text-blue-600 transition-colors">
+                                                            {{ $complaint->title ?? 'Pengaduan #' . $complaint->id }}
+                                                        </a>
+                                                    </h4>
+                                                    <p class="text-sm text-gray-500 mt-1">
+                                                        @if(auth()->user()->role === 'user')
+                                                            Dibuat {{ $complaint->created_at->diffForHumans() }}
+                                                        @else
+                                                            Dilaporkan oleh {{ $complaint->user->name ?? 'Anonim' }} • {{ $complaint->created_at->diffForHumans() }}
+                                                        @endif
+                                                    </p>
+                                                    <p class="text-xs text-gray-400 mt-1">
+                                                        <i class="fas fa-map-marker-alt mr-1"></i>{{ $complaint->location ?? 'Lokasi tidak tersedia' }}
+                                                    </p>
+                                                </div>
+                                                <div class="ml-4 flex flex-col items-end">
+                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $status['badge'] }} mb-2">
+                                                        <i class="{{ $status['icon'] }} mr-1"></i>{{ $status['label'] }}
+                                                    </span>
+                                                    <span class="text-xs text-gray-400">{{ $complaint->ticket }}</span>
+                                                </div>
+                                            </div>
+                                            @if ($complaint->category)
+                                                <div class="mt-2">
+                                                    <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-700">
+                                                        <i class="fas fa-tag mr-1"></i>{{ $complaint->category }}
+                                                    </span>
+                                                </div>
+                                            @endif
+                                            
+                                            <!-- Status Description untuk User -->
+                                            @if(auth()->user()->role === 'user')
+                                                <div class="mt-2">
+                                                    @if($complaint->status === 'pending')
+                                                        <p class="text-xs text-yellow-600 bg-yellow-50 px-2 py-1 rounded">
+                                                            <i class="fas fa-info-circle mr-1"></i>Pengaduan Anda sedang menunggu review dari admin
+                                                        </p>
+                                                    @elseif($complaint->status === 'accepted')
+                                                        <p class="text-xs text-blue-600 bg-blue-50 px-2 py-1 rounded">
+                                                            <i class="fas fa-check-circle mr-1"></i>Pengaduan Anda telah diterima dan akan segera diproses
+                                                        </p>
+                                                    @elseif($complaint->status === 'in_progress')
+                                                        <p class="text-xs text-purple-600 bg-purple-50 px-2 py-1 rounded">
+                                                            <i class="fas fa-cog mr-1"></i>Pengaduan Anda sedang dalam proses penanganan
+                                                        </p>
+                                                    @elseif($complaint->status === 'completed')
+                                                        <p class="text-xs text-green-600 bg-green-50 px-2 py-1 rounded">
+                                                            <i class="fas fa-check-double mr-1"></i>Pengaduan Anda telah diselesaikan
+                                                        </p>
+                                                    @elseif($complaint->status === 'rejected')
+                                                        <p class="text-xs text-red-600 bg-red-50 px-2 py-1 rounded">
+                                                            <i class="fas fa-times-circle mr-1"></i>Pengaduan Anda ditolak. Lihat detail untuk informasi lebih lanjut
+                                                        </p>
+                                                    @endif
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @else
+                            <div class="text-center py-8">
+                                <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-inbox text-gray-400 text-2xl"></i>
+                                </div>
+                                <h3 class="text-lg font-medium text-gray-900 mb-2">
+                                    @if(auth()->user()->role === 'user')
+                                        Belum Ada Pengaduan
+                                    @else
+                                        Belum Ada Pengaduan Masuk
+                                    @endif
+                                </h3>
+                                <p class="text-gray-500">
+                                    @if(auth()->user()->role === 'user')
+                                        Anda belum membuat pengaduan apapun.
+                                    @else
+                                        Belum ada pengaduan yang masuk ke sistem.
+                                    @endif
+                                </p>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions & Info -->
+            <div class="space-y-6">
+                <!-- Quick Actions -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Aksi Cepat</h3>
+                    <div class="space-y-3">
+                        @if(auth()->user()->role === 'user')
+                            <!-- DIUBAH: Urutan menu diubah, Semua Pengaduan jadi prioritas utama -->
+                            <a href="{{ route('user.all.complaints') }}" class="w-full flex items-center justify-between p-3 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors group">
+                                <div class="flex items-center">
+                                    <i class="fas fa-list text-blue-600 mr-3"></i>
+                                    <span class="text-sm font-medium text-gray-900">Lihat Semua Pengaduan</span>
+                                </div>
+                                <i class="fas fa-arrow-right text-blue-600 group-hover:translate-x-1 transition-transform"></i>
+                            </a>
+                            <a href="{{ route('complaint') }}" class="w-full flex items-center justify-between p-3 bg-green-50 hover:bg-green-100 rounded-lg transition-colors group">
+                                <div class="flex items-center">
+                                    <i class="fas fa-plus text-green-600 mr-3"></i>
+                                    <span class="text-sm font-medium text-gray-900">Buat Pengaduan</span>
+                                </div>
+                                <i class="fas fa-arrow-right text-green-600 group-hover:translate-x-1 transition-transform"></i>
+                            </a>
+                            <a href="{{ route('user.complaints') }}" class="w-full flex items-center justify-between p-3 bg-purple-50 hover:bg-purple-100 rounded-lg transition-colors group">
+                                <div class="flex items-center">
+                                    <i class="fas fa-file-alt text-purple-600 mr-3"></i>
+                                    <span class="text-sm font-medium text-gray-900">Pengaduan Saya</span>
+                                </div>
+                                <i class="fas fa-arrow-right text-purple-600 group-hover:translate-x-1 transition-transform"></i>
+                            </a>
+                            <a href="{{ route('user.complaints', ['status' => 'completed']) }}" class="w-full flex items-center justify-between p-3 bg-green-50 hover:bg-green-100 rounded-lg transition-colors group">
+                                <div class="flex items-center">
+                                    <i class="fas fa-check-circle text-green-600 mr-3"></i>
+                                    <span class="text-sm font-medium text-gray-900">Pengaduan Selesai</span>
+                                </div>
+                                <i class="fas fa-arrow-right text-green-600 group-hover:translate-x-1 transition-transform"></i>
+                            </a>
+                            <a href="{{ route('panduan') }}" class="w-full flex items-center justify-between p-3 bg-yellow-50 hover:bg-yellow-100 rounded-lg transition-colors group">
+                                <div class="flex items-center">
+                                    <i class="fas fa-book text-yellow-600 mr-3"></i>
+                                    <span class="text-sm font-medium text-gray-900">Lihat Panduan</span>
+                                </div>
+                                <i class="fas fa-arrow-right text-yellow-600 group-hover:translate-x-1 transition-transform"></i>
+                            </a>
+                        @else
+                            <a href="{{ route('admin.complaints.list') }}" class="w-full flex items-center justify-between p-3 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors group">
+                                <div class="flex items-center">
+                                    <i class="fas fa-tasks text-blue-600 mr-3"></i>
+                                    <span class="text-sm font-medium text-gray-900">Kelola Pengaduan</span>
+                                </div>
+                                <i class="fas fa-arrow-right text-blue-600 group-hover:translate-x-1 transition-transform"></i>
+                            </a>
+                            <a href="{{ route('admin.reports') }}" class="w-full flex items-center justify-between p-3 bg-green-50 hover:bg-green-100 rounded-lg transition-colors group">
+                                <div class="flex items-center">
+                                    <i class="fas fa-chart-line text-green-600 mr-3"></i>
+                                    <span class="text-sm font-medium text-gray-900">Lihat Laporan</span>
+                                </div>
+                                <i class="fas fa-arrow-right text-green-600 group-hover:translate-x-1 transition-transform"></i>
+                            </a>
+                            @if(auth()->user()->role === 'admin')
+                                <a href="{{ route('admin.users.list') }}" class="w-full flex items-center justify-between p-3 bg-purple-50 hover:bg-purple-100 rounded-lg transition-colors group">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-users text-purple-600 mr-3"></i>
+                                        <span class="text-sm font-medium text-gray-900">Kelola User</span>
+                                    </div>
+                                    <i class="fas fa-arrow-right text-purple-600 group-hover:translate-x-1 transition-transform"></i>
+                                </a>
+                            @endif
+                        @endif
+                    </div>
+                </div>
+
+                <!-- Status Summary -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Ringkasan Status</h3>
+                    <div class="space-y-3">
+                        @php
+                            $statusSummary = [
+                                'pending' => [
+                                    'count' => $complaints->where('status', 'pending')->count(), 
+                                    'config' => $statusConfig['pending']
+                                ],
+                                'accepted' => [
+                                    'count' => $complaints->where('status', 'accepted')->count(), 
+                                    'config' => $statusConfig['accepted']
+                                ],
+                                'in_progress' => [
+                                    'count' => $complaints->where('status', 'in_progress')->count(), 
+                                    'config' => $statusConfig['in_progress']
+                                ],
+                                'completed' => [
+                                    'count' => $complaints->where('status', 'completed')->count(), 
+                                    'config' => $statusConfig['completed']
+                                ],
+                                'rejected' => [
+                                    'count' => $complaints->where('status', 'rejected')->count(), 
+                                    'config' => $statusConfig['rejected']
+                                ],
+                            ];
+                        @endphp
+                        
+                        @foreach ($statusSummary as $statusKey => $data)
+                            @if ($data['count'] > 0)
+                                <div class="flex items-center justify-between p-3 {{ $data['config']['bg'] }} rounded-lg hover:{{ str_replace('100', '200', $data['config']['bg']) }} transition-colors cursor-pointer" onclick="filterByStatus('{{ $statusKey }}')">
+                                    <div class="flex items-center">
+                                        <i class="{{ $data['config']['icon'] }} {{ $data['config']['text'] }} mr-3"></i>
+                                        <div>
+                                            <span class="text-sm font-medium text-gray-900">{{ $data['config']['label'] }}</span>
+                                            @if(auth()->user()->role === 'user')
+                                                <p class="text-xs {{ $data['config']['text'] }} opacity-75">
+                                                    @if($statusKey === 'pending')
+                                                        Menunggu review admin
+                                                    @elseif($statusKey === 'accepted')
+                                                        Siap diproses
+                                                    @elseif($statusKey === 'in_progress')
+                                                        Sedang ditangani
+                                                    @elseif($statusKey === 'completed')
+                                                        Telah selesai
+                                                    @elseif($statusKey === 'rejected')
+                                                        Tidak disetujui
+                                                    @endif
+                                                </p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <span class="text-lg font-bold {{ $data['config']['text'] }}">{{ $data['count'] }}</span>
+                                </div>
+                            @endif
+                        @endforeach
+                        
+                        @if($complaints->count() == 0)
+                            <div class="text-center py-4">
+                                <p class="text-sm text-gray-500">Belum ada pengaduan</p>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+
+                <!-- Help Center -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Pusat Bantuan</h3>
+                    <div class="space-y-3">
+                        <a href="#" class="flex items-center p-3 hover:bg-gray-50 rounded-lg transition-colors">
+                            <i class="fas fa-question-circle text-gray-400 mr-3"></i>
+                            <span class="text-sm text-gray-700">FAQ</span>
+                        </a>
+                        <a href="#" class="flex items-center p-3 hover:bg-gray-50 rounded-lg transition-colors">
+                            <i class="fas fa-phone text-gray-400 mr-3"></i>
+                            <span class="text-sm text-gray-700">Hubungi Kami</span>
+                        </a>
+                        <a href="{{ route('panduan') }}" class="flex items-center p-3 hover:bg-gray-50 rounded-lg transition-colors">
+                            <i class="fas fa-book text-gray-400 mr-3"></i>
+                            <span class="text-sm text-gray-700">Panduan</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="mt-8">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+                <div class="p-6 border-b border-gray-200">
+                    <h3 class="text-lg font-semibold text-gray-900">Aktivitas Terbaru</h3>
+                </div>
+                <div class="p-6">
+                    @if ($complaints->count() > 0)
+                        <div class="flow-root">
+                            <ul class="-mb-auto">
+                                @foreach ($complaints->take(3) as $index => $complaint)
+                                    @php
+                                        $status = $statusConfig[$complaint->status] ?? [
+                                            'label' => 'Unknown',
+                                            'bg' => 'bg-gray-100',
+                                            'text' => 'text-gray-600',
+                                            'icon' => 'fas fa-file-alt',
+                                        ];
+                                        $activityMessages = [
+                                            'completed' => 'telah diselesaikan',
+                                            'accepted' => 'telah diterima dan diverifikasi',
+                                            'in_progress' => 'sedang dalam proses penanganan',
+                                            'rejected' => 'ditolak',
+                                            'pending' => 'menunggu review',
+                                        ];
+                                        $message = $activityMessages[$complaint->status] ?? 'telah dibuat oleh ' . ($complaint->user->name ?? 'Anonim');
+                                    @endphp
+                                    <li>
+                                        <div class="relative {{ $index < 2 ? 'pb-8' : '' }}">
+                                            @if ($index < 2)
+                                                <span class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200"></span>
+                                            @endif
+                                            <div class="relative flex space-x-3">
+                                                <div class="w-8 h-8 {{ $status['bg'] }} rounded-full flex items-center justify-center">
+                                                    <i class="{{ $status['icon'] }} {{ $status['text'] }} text-sm"></i>
+                                                </div>
+                                                <div class="min-w-0 flex-1 pt-1.5">
+                                                    <p class="text-sm text-gray-500">
+                                                        Pengaduan <span class="font-medium text-gray-900">{{ $complaint->ticket }}</span>
+                                                        {{ $message }}
+                                                    </p>
+                                                    <p class="text-xs text-gray-400 mt-1">{{ $complaint->created_at->diffForHumans() }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @else
+                        <div class="text-center py-8">
+                            <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-history text-gray-400 text-2xl"></i>
+                            </div>
+                            <h3 class="text-lg font-medium text-gray-900 mb-2">Belum Ada Aktivitas</h3>
+                            <p class="text-gray-500">Aktivitas akan muncul setelah ada pengaduan yang masuk.</p>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Lihat Semua Pengaduan (Hanya untuk Admin/Government) -->
+    @if(auth()->user()->role !== 'user')
+    <div x-show="showAllModal" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" style="display: none;">
+        <div @click.away="showAllModal = false" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-95" x-transition:enter-end="opacity-100 transform scale-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 transform scale-100" x-transition:leave-end="opacity-0 transform scale-95" class="bg-white rounded-2xl shadow-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between p-6 border-b border-gray-200 bg-white sticky top-0 z-10">
+                <h2 class="text-2xl font-bold text-gray-900">Semua Pengaduan</h2>
+                <button @click="showAllModal = false" class="w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors">
+                    <i class="fas fa-times text-gray-600"></i>
+                </button>
+            </div>
+            <!-- Modal Content -->
+            <div class="overflow-y-auto max-h-[calc(90vh-120px)]">
+                @if ($complaints->count() > 0)
+                    <div class="p-6">
+                        <div class="grid gap-4">
+                            @foreach ($complaints as $complaint)
+                                @php
+                                    $status = $statusConfig[$complaint->status] ?? [
+                                        'label' => ucfirst(str_replace('_', ' ', $complaint->status)),
+                                        'icon' => 'fas fa-file-alt',
+                                        'bg' => 'bg-gray-100',
+                                        'text' => 'text-gray-600',
+                                        'badge' => 'bg-gray-100 text-gray-800',
+                                    ];
+                                @endphp
+                                <div class="complaint-item flex items-start space-x-4 p-6 bg-white border border-gray-200 rounded-xl hover:shadow-md transition-shadow" data-status="{{ $complaint->status }}">
+                                    <div class="w-12 h-12 {{ $status['bg'] }} rounded-lg flex items-center justify-center flex-shrink-0">
+                                        <i class="{{ $status['icon'] }} {{ $status['text'] }}"></i>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <div class="flex items-start justify-between">
+                                            <div class="flex-1">
+                                                <h4 class="text-lg font-semibold text-gray-900 mb-2">
+                                                    <a href="{{ route('complaint.detail', $complaint->id) }}" class="hover:text-blue-600 transition-colors">
+                                                        {{ $complaint->title ?? 'Pengaduan #' . $complaint->id }}
+                                                    </a>
+                                                </h4>
+                                                <p class="text-sm text-gray-600 mb-3 line-clamp-2">
+                                                    {{ $complaint->description ?? 'Tidak ada deskripsi' }}
+                                                </p>
+                                                <div class="flex flex-wrap items-center gap-3 mb-3">
+                                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium {{ $status['badge'] }}">
+                                                        <i class="{{ $status['icon'] }} mr-1"></i>{{ $status['label'] }}
+                                                    </span>
+                                                    @if ($complaint->category)
+                                                        <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-700">
+                                                            <i class="fas fa-tag mr-1"></i>{{ $complaint->category }}
+                                                        </span>
+                                                    @endif
+                                                </div>
+                                                <div class="flex items-center text-sm text-gray-500 space-x-4">
+                                                    <span>
+                                                        <i class="fas fa-user mr-1"></i>{{ $complaint->user->name ?? 'Anonim' }}
+                                                    </span>
+                                                    <span>
+                                                        <i class="fas fa-clock mr-1"></i>{{ $complaint->created_at->diffForHumans() }}
+                                                    </span>
+                                                    <span>
+                                                        <i class="fas fa-ticket-alt mr-1"></i>{{ $complaint->ticket }}
+                                                    </span>
+                                                </div>
+                                                @if ($complaint->location)
+                                                    <p class="text-xs text-gray-400 mt-2">
+                                                        <i class="fas fa-map-marker-alt mr-1"></i>{{ $complaint->location }}
+                                                    </p>
+                                                @endif
+                                            </div>
+                                            <div class="ml-4 flex space-x-2">
+                                                <a href="{{ route('complaint.detail', $complaint->id) }}" class="inline-flex items-center px-3 py-2 bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium rounded-lg transition-colors">
+                                                    <i class="fas fa-eye mr-2"></i>Detail
+                                                </a>
+                                                <a href="{{ route('admin.complaint.detail', $complaint->id) }}" class="inline-flex items-center px-3 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg transition-colors">
+                                                    <i class="fas fa-cog mr-2"></i>Kelola
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @else
+                    <div class="text-center py-16">
+                        <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-inbox text-gray-400 text-3xl"></i>
+                        </div>
+                        <h3 class="text-xl font-medium text-gray-900 mb-2">Belum Ada Pengaduan</h3>
+                        <p class="text-gray-500">Belum ada pengaduan yang masuk ke sistem.</p>
+                    </div>
+                @endif
+            </div>
+        </div>
+    </div>
+    @endif
+
+    <!-- Mobile Navigation -->
+    <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+        <div class="flex justify-around">
+            @if(auth()->user()->role === 'user')
+                <a href="{{ route('dashboard') }}" class="flex flex-col items-center py-2 text-blue-600">
+                    <i class="fas fa-home text-lg"></i>
+                    <span class="text-xs mt-1">Dashboard</span>
+                </a>
+                <a href="{{ route('user.all.complaints') }}" class="flex flex-col items-center py-2 text-gray-400">
+                    <i class="fas fa-list text-lg"></i>
+                    <span class="text-xs mt-1">Semua</span>
+                </a>
+                <a href="{{ route('user.complaints') }}" class="flex flex-col items-center py-2 text-gray-400">
+                    <i class="fas fa-file-alt text-lg"></i>
+                    <span class="text-xs mt-1">Pengaduan</span>
+                </a>
+                <a href="{{ route('complaint') }}" class="flex flex-col items-center py-2 text-gray-400">
+                    <i class="fas fa-plus text-lg"></i>
+                    <span class="text-xs mt-1">Buat</span>
+                </a>
+                <a href="{{ route('profile.edit') }}" class="flex flex-col items-center py-2 text-gray-400">
+                    <i class="fas fa-user text-lg"></i>
+                    <span class="text-xs mt-1">Profil</span>
+                </a>
+            @else
+                <a href="{{ route('dashboard') }}" class="flex flex-col items-center py-2 text-blue-600">
+                    <i class="fas fa-home text-lg"></i>
+                    <span class="text-xs mt-1">Dashboard</span>
+                </a>
+                <a href="{{ route('admin.complaints.list') }}" class="flex flex-col items-center py-2 text-gray-400">
+                    <i class="fas fa-file-alt text-lg"></i>
+                    <span class="text-xs mt-1">Pengaduan</span>
+                </a>
+                @if(auth()->user()->role === 'admin')
+                    <a href="{{ route('admin.users.list') }}" class="flex flex-col items-center py-2 text-gray-400">
+                        <i class="fas fa-users text-lg"></i>
+                        <span class="text-xs mt-1">Users</span>
+                    </a>
+                @endif
+                <a href="{{ route('admin.reports') }}" class="flex flex-col items-center py-2 text-gray-400">
+                    <i class="fas fa-chart-bar text-lg"></i>
+                    <span class="text-xs mt-1">Laporan</span>
+                </a>
+                <a href="{{ route('profile.edit') }}" class="flex flex-col items-center py-2 text-gray-400">
+                    <i class="fas fa-user text-lg"></i>
+                    <span class="text-xs mt-1">Profil</span>
+                </a>
+            @endif
+        </div>
+    </div>
+
+    <style>
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('alpine:init', () => {
+            console.log('Alpine.js initialized');
         });
+
+        function filterByStatus(status) {
+            // Show modal with filtered complaints
+            const modal = document.querySelector('[x-data]').__x.$data;
+            modal.showAllModal = true;
+            
+            // Filter complaints by status
+            setTimeout(() => {
+                const complaints = document.querySelectorAll('.complaint-item');
+                complaints.forEach(complaint => {
+                    const complaintStatus = complaint.dataset.status;
+                    if (status === 'all' || complaintStatus === status) {
+                        complaint.style.display = 'block';
+                    } else {
+                        complaint.style.display = 'none';
+                    }
+                });
+            }, 100);
+        }
     </script>
 </body>
 </html>
-
