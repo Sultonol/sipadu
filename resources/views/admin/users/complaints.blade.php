@@ -51,10 +51,10 @@
                         class="text-gray-600 hover:text-blue-600 text-sm font-medium transition-colors">
                         <i class="fas fa-home mr-1 text-xs"></i>Dashboard
                     </a>
-										<a href="{{ route('user.all.complaints') }}"
-												class="text-gray-600 hover:text-blue-600 text-sm font-medium transition-colors">
-												<i class="fas fa-list mr-1 text-xs"></i>Semua Pengaduan
-										</a>
+                    <a href="{{ route('user.all.complaints') }}"
+                        class="text-gray-600 hover:text-blue-600 text-sm font-medium transition-colors">
+                        <i class="fas fa-list mr-1 text-xs"></i>Semua Pengaduan
+                    </a>
                     <a href="{{ route('user.complaints') }}"
                         class="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors">
                         <i class="fas fa-file-alt mr-1 text-xs"></i>Pengaduan Saya
@@ -439,7 +439,7 @@
                             filtered = filtered.filter(complaint =>
                                 (complaint.title && complaint.title.toLowerCase().includes(search)) ||
                                 (complaint.description && complaint.description.toLowerCase().includes(
-                                search)) ||
+                                    search)) ||
                                 (complaint.ticket && complaint.ticket.toLowerCase().includes(search))
                             );
                         }

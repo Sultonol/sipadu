@@ -450,7 +450,8 @@
 
                         // Validate file type
                         const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'video/mp4', 'video/avi',
-                        'video/mov'];
+                            'video/mov'
+                        ];
                         if (!allowedTypes.includes(file.type)) {
                             this.errors.media = 'Format file tidak didukung. Gunakan JPG, PNG, atau MP4';
                             this.fileName = '';

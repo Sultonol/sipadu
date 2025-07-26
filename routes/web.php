@@ -28,7 +28,7 @@ Route::middleware(['guest', 'authacces'])->group(function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    
+
     // Profile routes
     Route::prefix('profile')->name('profile.')->group(function () {
         Route::get('/', [ProfileController::class, 'edit'])->name('edit');
@@ -53,7 +53,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware('user')->group(function () {
         Route::get('/my-complaints', [DashboardController::class, 'userComplaints'])->name('user.complaints');
         Route::get('/my-complaints/filter', [DashboardController::class, 'filterUserComplaints'])->name('user.complaints.filter');
-        
+
         // ROUTE BARU: Untuk melihat semua pengaduan dari semua user
         Route::get('/all-complaints', [DashboardController::class, 'allComplaints'])->name('user.all.complaints');
         Route::get('/all-complaints/filter', [DashboardController::class, 'filterAllComplaints'])->name('user.all.complaints.filter');
@@ -107,7 +107,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('api')->name('api.')->group(function () {
         Route::get('/dashboard/stats', [DashboardController::class, 'getDashboardStats'])->name('dashboard.stats');
         Route::get('/complaints/status/{status}', [DashboardController::class, 'getComplaintsByStatus'])->name('complaints.by-status');
-        
+
         Route::middleware('admin_or_government')->group(function () {
             Route::get('/complaints/analytics', [DashboardController::class, 'getAnalytics'])->name('complaints.analytics');
             Route::post('/complaints/{id}/quick-update', [DashboardController::class, 'quickUpdateStatus'])->name('complaints.quick-update');
