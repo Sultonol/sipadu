@@ -23,13 +23,13 @@ class ProfileController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-            'nik' => 'required|string|max:100|unique:users,nik,' . $user->id,
+            // 'nik' => 'required|string|max:100|unique:users,nik,' . $user->id,
         ]);
 
         $user->update([
             'name' => $request->name,
             'email' => $request->email,
-            'nik' => $request->nik,
+            // 'nik' => $request->nik,
         ]);
 
         return redirect()->route('profile.edit')

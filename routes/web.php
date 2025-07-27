@@ -28,7 +28,7 @@ Route::middleware(['guest', 'authacces'])->group(function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
+    
     // Profile routes
     Route::prefix('profile')->name('profile.')->group(function () {
         Route::get('/', [ProfileController::class, 'edit'])->name('edit');
@@ -41,32 +41,24 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/detail-panduan/{id}', [DashboardController::class, 'detailpandu'])->name('complaint.detail');
     Route::get('/complete-pengadu', [DashboardController::class, 'complete'])->name('complete');
 
-    // User complaint routes
-    Route::prefix('complaint')->name('complaint.')->group(function () {
-        Route::get('/add', [ComplaintController::class, 'add'])->name('add');
-        Route::post('/create', [ComplaintController::class, 'create'])->name('create');
-        Route::get('/{id}/edit', [ComplaintController::class, 'editComplaint'])->name('edit');
-        Route::put('/{id}', [ComplaintController::class, 'updateComplaint'])->name('update');
-    });
+    // DIPERBAIKI: User complaint routes - gunakan ComplaintController yang sudah ada
+    Route::get('/complaint-add', [ComplaintController::class, 'add'])->name('complaint');
+    Route::post('/complaint-create', [ComplaintController::class, 'create'])->name('complaint.create');
+    
+    // DIPERBAIKI: Edit complaint routes - sesuaikan dengan method yang sudah ada
+    Route::get('/complaint/{id}/edit', [ComplaintController::class, 'editcomplaint'])->name('complaint.edit');
+    Route::put('/complaint/{id}/update', [ComplaintController::class, 'updatecomplaint'])->name('complaint.update');
 
-    // User complaints page - ROUTE BARU
+    // User complaints page
     Route::middleware('user')->group(function () {
         Route::get('/my-complaints', [DashboardController::class, 'userComplaints'])->name('user.complaints');
         Route::get('/my-complaints/filter', [DashboardController::class, 'filterUserComplaints'])->name('user.complaints.filter');
-
-        // ROUTE BARU: Untuk melihat semua pengaduan dari semua user
         Route::get('/all-complaints', [DashboardController::class, 'allComplaints'])->name('user.all.complaints');
         Route::get('/all-complaints/filter', [DashboardController::class, 'filterAllComplaints'])->name('user.all.complaints.filter');
     });
 
-    // Backward compatibility routes
-    Route::get('/complaint-add', [ComplaintController::class, 'add'])->name('complaint');
-    Route::get('/complaints/{id}/edit', [ComplaintController::class, 'editComplaint'])->name('complaints.edit');
-    Route::put('/complaints/{id}', [ComplaintController::class, 'updateComplaint'])->name('complaints.update');
-
-    // Admin/Government routes - dengan middleware role check
+    // Admin/Government routes
     Route::middleware('admin_or_government')->prefix('admin')->name('admin.')->group(function () {
-        // Complaint management
         Route::prefix('complaints')->name('complaints.')->group(function () {
             Route::get('/', [DashboardController::class, 'adminComplaintsList'])->name('list');
             Route::get('/{id}', [DashboardController::class, 'adminComplaintDetail'])->name('detail');
@@ -75,23 +67,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('/{id}/response', [DashboardController::class, 'adminAddResponse'])->name('add-response');
         });
 
-        // Backward compatibility routes
         Route::get('/complaint/{id}', [DashboardController::class, 'adminComplaintDetail'])->name('complaint.detail');
         Route::put('/complaint/{id}/status', [DashboardController::class, 'adminUpdateStatus'])->name('update-status');
         Route::post('/complaint/{id}/comment', [DashboardController::class, 'adminAddComment'])->name('add-comment');
         Route::post('/complaint/{id}/response', [DashboardController::class, 'adminAddResponse'])->name('add-response');
 
-        // Reports and Analytics
         Route::get('/reports', [AdminController::class, 'reports'])->name('reports');
         Route::get('/analytics', [DashboardController::class, 'getAnalytics'])->name('analytics');
         Route::get('/export', [DashboardController::class, 'exportComplaints'])->name('export');
-
-        // Settings
         Route::get('/settings', [AdminController::class, 'settings'])->name('settings');
         Route::put('/settings', [AdminController::class, 'updateSettings'])->name('settings.update');
     });
 
-    // Admin only routes - User management
+    // Admin only routes
     Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
         Route::prefix('users')->name('users.')->group(function () {
             Route::get('/', [AdminController::class, 'usersList'])->name('list');
@@ -103,18 +91,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
     });
 
-    // API routes for AJAX calls
+    // API routes
     Route::prefix('api')->name('api.')->group(function () {
         Route::get('/dashboard/stats', [DashboardController::class, 'getDashboardStats'])->name('dashboard.stats');
         Route::get('/complaints/status/{status}', [DashboardController::class, 'getComplaintsByStatus'])->name('complaints.by-status');
-
         Route::middleware('admin_or_government')->group(function () {
             Route::get('/complaints/analytics', [DashboardController::class, 'getAnalytics'])->name('complaints.analytics');
             Route::post('/complaints/{id}/quick-update', [DashboardController::class, 'quickUpdateStatus'])->name('complaints.quick-update');
         });
     });
 
-    // Logout
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout.post');
 });
@@ -124,19 +110,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/email/verify', function () {
         return view('auth.verify-email');
     })->name('verification.notice');
-
+    
     Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
         $request->fulfill();
         return redirect('/dashboard')->with('success', 'Email berhasil diverifikasi!');
     })->middleware(['auth', 'signed'])->name('verification.verify');
-
+    
     Route::post('/email/verification-notification', function (Request $request) {
         $request->user()->sendEmailVerificationNotification();
         return back()->with('message', 'Link verifikasi telah dikirim!');
     })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 });
 
-// Fallback route untuk 404
 Route::fallback(function () {
     return view('errors.404');
 });

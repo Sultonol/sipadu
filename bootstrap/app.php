@@ -19,12 +19,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin' => Checkrole::class,
             'admin_or_government' => Adminpemerintah::class,
             'authacces' => Authacces::class,
-        ]);
-
-        $middleware->alias([
-            'user' => Checkrole::class,
             'user' => UserMiddleware::class,
-            'authacces' => Authacces::class
+
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

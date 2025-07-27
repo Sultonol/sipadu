@@ -414,9 +414,9 @@ class DashboardController extends Controller
         $complaint = Complaint::with('user')->findOrFail($id);
 
         // Check if user can view this complaint
-        if (Auth::user()->role === 'user' && $complaint->user_id !== Auth::id()) {
-            abort(403, 'Unauthorized access');
-        }
+        // if (Auth::user()->role === 'user' && $complaint->user_id !== Auth::id()) {
+        //     abort(403, 'Unauthorized access');
+        // }
 
         $statusConfig = [
             'pending' => ['label' => 'Menunggu', 'color' => 'yellow', 'icon' => 'fas fa-clock'],

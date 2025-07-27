@@ -5,7 +5,8 @@
         <div class="flex justify-between items-center h-14">
             <!-- Logo & Brand -->
             <div class="flex items-center space-x-3">
-                <div class="logo-container bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+                <div
+                    class="logo-container bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
                     <i class="fas fa-comments text-white logo-icon"></i>
                 </div>
                 <div>
@@ -19,16 +20,19 @@
                 <a href="{{ route('dashboard') }}" class="nav-link text-blue-600 hover:text-blue-700">
                     <i class="nav-icon fas fa-home"></i>Dashboard
                 </a>
-                
+
                 @if ($user->role === 'user')
-                    <a href="#" class="nav-link text-gray-600 hover:text-blue-600">
-                        <i class="nav-icon fas fa-file-alt"></i>Pengaduan
+                    <a href="{{ route('user.all.complaints') }}"
+                        class="text-gray-600 hover:text-blue-600 text-sm font-medium transition-colors">
+                        <i class="fas fa-list mr-1 text-xs"></i>Semua Pengaduan
                     </a>
-                    <a href="{{ route('complaint') }}" class="nav-link text-gray-600 hover:text-blue-600">
-                        <i class="nav-icon fas fa-plus"></i>Buat
+                    <a href="{{ route('user.complaints') }}"
+                        class="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors">
+                        <i class="fas fa-file-alt mr-1 text-xs"></i>Pengaduan Saya
                     </a>
-                    <a href="{{ route('panduan') }}" class="nav-link text-gray-600 hover:text-blue-600">
-                        <i class="nav-icon fas fa-book"></i>Panduan
+                    <a href="{{ route('complaint') }}"
+                        class="text-gray-600 hover:text-blue-600 text-sm font-medium transition-colors">
+                        <i class="fas fa-plus mr-1 text-xs"></i>Buat Pengaduan
                     </a>
                 @elseif ($user->role === 'admin')
                     <a href="{{ route('admin.complaints.list') }}" class="nav-link text-gray-600 hover:text-blue-600">
@@ -43,7 +47,7 @@
                     <a href="{{ route('admin.settings') }}" class="nav-link text-gray-600 hover:text-blue-600">
                         <i class="nav-icon fas fa-cog"></i>Setting
                     </a>
-                @elseif ($user->role === 'government')
+                @elseif ($user->role === 'pemerintah')
                     <a href="{{ route('admin.complaints.list') }}" class="nav-link text-gray-600 hover:text-blue-600">
                         <i class="nav-icon fas fa-file-alt"></i>Pengaduan
                     </a>
@@ -62,7 +66,7 @@
                     <div class="text-right">
                         <p class="user-name text-gray-900">{{ Str::limit($user->name, 15) }}</p>
                         <div class="mt-0.5">
-                            @if($user->role === 'admin')
+                            @if ($user->role === 'admin')
                                 <span class="role-badge bg-red-100 text-red-800 rounded-full">Admin</span>
                             @elseif($user->role === 'government')
                                 <span class="role-badge bg-green-100 text-green-800 rounded-full">Gov</span>
@@ -72,31 +76,37 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="relative">
-                    <button @click="open = !open" class="user-avatar bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white hover:shadow-md transition-shadow">
+                    <button @click="open = !open"
+                        class="user-avatar bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white hover:shadow-md transition-shadow">
                         <i class="fas fa-user"></i>
                     </button>
-                    
-                    <div x-show="open" @click.away="open = false" x-transition class="dropdown-menu absolute right-0 mt-2 bg-white rounded-lg shadow-lg py-1 z-50">
-                        <a href="{{ route('profile.edit') }}" class="dropdown-item block text-gray-700 hover:bg-gray-50">
+
+                    <div x-show="open" @click.away="open = false" x-transition
+                        class="dropdown-menu absolute right-0 mt-2 bg-white rounded-lg shadow-lg py-1 z-50">
+                        <a href="{{ route('profile.edit') }}"
+                            class="dropdown-item block text-gray-700 hover:bg-gray-50">
                             <i class="dropdown-icon fas fa-user-circle mr-2"></i>Profil
                         </a>
-                        
-                        @if($user->role === 'admin')
-                            <a href="{{ route('admin.settings') }}" class="dropdown-item block text-gray-700 hover:bg-gray-50">
+
+                        @if ($user->role === 'admin')
+                            <a href="{{ route('admin.settings') }}"
+                                class="dropdown-item block text-gray-700 hover:bg-gray-50">
                                 <i class="dropdown-icon fas fa-cog mr-2"></i>Setting
                             </a>
-                        @elseif($user->role === 'government')
-                            <a href="{{ route('admin.reports') }}" class="dropdown-item block text-gray-700 hover:bg-gray-50">
+                        @elseif($user->role === 'pemerintah')
+                            <a href="{{ route('admin.reports') }}"
+                                class="dropdown-item block text-gray-700 hover:bg-gray-50">
                                 <i class="dropdown-icon fas fa-chart-line mr-2"></i>Laporan
                             </a>
                         @elseif($user->role === 'user')
-                            <a href="{{ route('complaint') }}" class="dropdown-item block text-gray-700 hover:bg-gray-50">
+                            <a href="{{ route('complaint') }}"
+                                class="dropdown-item block text-gray-700 hover:bg-gray-50">
                                 <i class="dropdown-icon fas fa-plus mr-2"></i>Buat
                             </a>
                         @endif
-                        
+
                         <div class="border-t border-gray-100 my-1"></div>
                         <a href="{{ route('logout') }}" class="dropdown-item block text-gray-700 hover:bg-gray-50">
                             <i class="dropdown-icon fas fa-sign-out-alt mr-2"></i>Logout

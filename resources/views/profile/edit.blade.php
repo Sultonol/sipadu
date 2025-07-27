@@ -66,7 +66,7 @@
                             @enderror
                         </div>
 
-                        <div>
+                        {{-- <div>
                             <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Nomor Telepon</label>
                             <input type="text" 
                                    id="phone" 
@@ -87,7 +87,7 @@
                             @error('address')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
-                        </div>
+                        </div> --}}
 
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Role</label>

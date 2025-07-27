@@ -138,8 +138,8 @@
                 </div>
             </div>
 
-            <form action="{{ '/complaint/create' }}" method="POST" enctype="multipart/form-data" class="p-6 space-y-6"
-                @submit="validateForm">
+            <form action="{{ route('complaint.create') }}" method="POST" enctype="multipart/form-data"
+                class="p-6 space-y-6" @submit="validateForm">
                 @csrf
 
                 <!-- Title -->
